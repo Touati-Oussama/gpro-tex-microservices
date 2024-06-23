@@ -84,7 +84,7 @@ deploy-config-server-job:
     - nohup java -jar target/config-server-1.0.0.jar > config-server.log 2>&1 & 
     - sleep 30
     -  - echo "Checking application health..."
-    - curl -f http://188.40.173.211:10000/actuator/health || (echo "Application failed to start" && cat config-server.log && exit1)
+    - curl -f http://localhost:10000/actuator/health || (echo "Application failed to start" && cat config-server.log && exit1)
   needs:
     - clean-job
   variables:
@@ -99,7 +99,7 @@ deploy-discovery-service-job:
     - echo "Deploying the code..."
     - nohup java -jar target/discovery-1.0.0.jar > config-server.log 2>&1 &
     - sleep 30 
-    - curl -f http://188.40.173.211:8668/actuator/health || (echo "Application failed to start" && exit 1)
+    - curl -f http://localhost:8668/actuator/health || (echo "Application failed to start" && exit 1)
   needs:
     - clean-job
     - deploy-config-server-job
@@ -116,7 +116,7 @@ deploy-gateway-service-job:
       - nohup java -jar gateway-1.0.0.jar > config-server.log 2>&1 &
       - sleep 80  
       - cat config-server.log
-      - curl -f http://188.40.173.211:4444/actuator/health || (echo "Application failed to start" && exit 1)
+      - curl -f http://localhost:4444/actuator/health || (echo "Application failed to start" && exit 1)
     needs:
       - clean-job
       - deploy-config-server-job
@@ -133,7 +133,7 @@ deploy-production-service-job:
       - echo "Deploying the code..."
       - nohup java -jar target/production-1.0.0.jar > /dev/null 2>&1 & 
       - sleep 60  
-      - curl -f http://188.40.173.211:6767/actuator/health || (echo "Application failed to start" && exit 1)
+      - curl -f http://localhost:6767/actuator/health || (echo "Application failed to start" && exit 1)
     needs:
       - clean-job
       - deploy-config-server-job
@@ -152,7 +152,7 @@ deploy-product-service-job:
       - nohup java -jar produit-1.0.0.jar > config-server.log 2>&1 &
       - sleep 80  
       - cat config-server.log
-      - curl -f http://188.40.173.211:2323/actuator/health || (echo "Application failed to start" && exit 1)
+      - curl -f http://localhost:2323/actuator/health || (echo "Application failed to start" && exit 1)
     needs:
       - clean-job
       - deploy-config-server-job
@@ -169,7 +169,7 @@ deploy-partie-prenante-service-job:
       - echo "Deploying the code..."
       - nohup java -jar target/partie-prenante-1.0.0.jar > /dev/null 2>&1 & 
       - sleep 60  
-      - curl -f http://188.40.173.211:3434/actuator/health || (echo "Application failed to start" && cat config-server.log && exit1 )
+      - curl -f http://localhost:3434/actuator/health || (echo "Application failed to start" && cat config-server.log && exit1 )
     needs:
       - clean-job
       - deploy-config-server-job
@@ -186,7 +186,7 @@ deploy-order-service-job:
       - echo "Deploying the code..."
       - nohup java -jar target/ordre-1.0.0.jar > /dev/null 2>&1 & 
       - sleep 60  
-      - curl -f http://188.40.173.211:5656/actuator/health || (echo "Application failed to start" && exit 1)
+      - curl -f http://localhost:5656/actuator/health || (echo "Application failed to start" && exit 1)
     needs:
       - clean-job
       - deploy-config-server-job
