@@ -1,0 +1,788 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "OpenApi specification - Oussama Soussi",
+      "description": "OpenApi documentation for production service",
+      "contact": {
+        "name": "Oussama",
+        "email": "oussama.soussi.it@gmail.com"
+      },
+      "version": "1.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:6767/production/",
+        "description": "Production API"
+      }
+    ],
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "paths": {
+      "/api/production/prodJour/createProdJour": {
+        "post": {
+          "tags": [
+            "production-jour-controller"
+          ],
+          "operationId": "createProdJour",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductionJourValue"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductionJour"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/production/prodHeureDetails/createProdHeureDetails": {
+        "post": {
+          "tags": [
+            "production-heure-details-controller"
+          ],
+          "operationId": "createProdHeureDetails",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductionHeureDetailsValue"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductionHeureDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/production/prodHeure/createProdHeure": {
+        "post": {
+          "tags": [
+            "production-heure-controller"
+          ],
+          "operationId": "createProdHeure",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductionHeureValue"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductionHeure"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/production/prodJour/find/by/{id}": {
+        "get": {
+          "tags": [
+            "production-jour-controller"
+          ],
+          "operationId": "findProdJourById",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductionJourValue"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/production/prodJour/find/all": {
+        "get": {
+          "tags": [
+            "production-jour-controller"
+          ],
+          "operationId": "findAll",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ProductionJourValue"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/production/prodHeureDetails/find/by/{id}": {
+        "get": {
+          "tags": [
+            "production-heure-details-controller"
+          ],
+          "operationId": "findProdHeureDetailsById",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductionHeureDetailsValue"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/production/prodHeureDetails/find/all": {
+        "get": {
+          "tags": [
+            "production-heure-details-controller"
+          ],
+          "operationId": "findAll_1",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ProductionHeureDetailsValue"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/production/prodHeure/find/by/{id}": {
+        "get": {
+          "tags": [
+            "production-heure-controller"
+          ],
+          "operationId": "findProdHeureById",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductionHeureValue"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/production/prodHeure/find/all": {
+        "get": {
+          "tags": [
+            "production-heure-controller"
+          ],
+          "operationId": "findAll_2",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ProductionHeureValue"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/production/prodJour/delete/{id}": {
+        "delete": {
+          "tags": [
+            "production-jour-controller"
+          ],
+          "operationId": "deleteProdJour",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/api/production/prodHeureDetails/delete/{id}": {
+        "delete": {
+          "tags": [
+            "production-heure-details-controller"
+          ],
+          "operationId": "deleteProdHeureDetails",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/api/production/prodHeure/delete/{id}": {
+        "delete": {
+          "tags": [
+            "production-heure-controller"
+          ],
+          "operationId": "deleteProdHeure",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "ProductionJourValue": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "quantite": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "observation": {
+              "type": "string"
+            },
+            "elementPlanningId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "ofId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "chaineId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "partieInterreseId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "produitId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "periode": {
+              "type": "string"
+            }
+          }
+        },
+        "ProductionJour": {
+          "type": "object",
+          "properties": {
+            "creationDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "modificationDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "deletionDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "creatorIdentifier": {
+              "type": "string"
+            },
+            "latestUpdaterId": {
+              "type": "string"
+            },
+            "version": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "archived": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "quantite": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "observation": {
+              "type": "string"
+            },
+            "elementPlanningId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "ofId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "chaineId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "partieInterreseId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "produitId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "periode": {
+              "type": "string"
+            }
+          }
+        },
+        "ProductionHeureDetailsValue": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "productionHeureId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "detailsId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "qteFinie": {
+              "type": "number",
+              "format": "double"
+            },
+            "qteNonEmballe": {
+              "type": "number",
+              "format": "double"
+            },
+            "qteRetouche": {
+              "type": "number",
+              "format": "double"
+            },
+            "qteDeuxiemeChoix": {
+              "type": "number",
+              "format": "double"
+            },
+            "nbreColis": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "numPaquet": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "paquetId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "colisId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "complement": {
+              "type": "boolean"
+            },
+            "quantite": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "operation": {
+              "type": "string"
+            },
+            "observations": {
+              "type": "string"
+            },
+            "tailleId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "couleurId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "ordrePaquet": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "numMatelasPaquet": {
+              "type": "string"
+            },
+            "nature": {
+              "type": "string"
+            }
+          }
+        },
+        "ProductionHeure": {
+          "type": "object",
+          "properties": {
+            "creationDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "modificationDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "deletionDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "creatorIdentifier": {
+              "type": "string"
+            },
+            "latestUpdaterId": {
+              "type": "string"
+            },
+            "version": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "archived": {
+              "type": "boolean"
+            },
+            "productionHeureDetails": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ProductionHeureDetails"
+              }
+            },
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "quantite": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "observation": {
+              "type": "string"
+            },
+            "elementPlanningId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "ofId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "chaineId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "partieInterreseId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "produitId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "periode": {
+              "type": "string"
+            }
+          }
+        },
+        "ProductionHeureDetails": {
+          "type": "object",
+          "properties": {
+            "creationDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "modificationDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "deletionDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "creatorIdentifier": {
+              "type": "string"
+            },
+            "latestUpdaterId": {
+              "type": "string"
+            },
+            "version": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "archived": {
+              "type": "boolean"
+            },
+            "productionHeure": {
+              "$ref": "#/components/schemas/ProductionHeure"
+            },
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "detailsId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "qteFinie": {
+              "type": "number",
+              "format": "double"
+            },
+            "qteNonEmballe": {
+              "type": "number",
+              "format": "double"
+            },
+            "qteRetouche": {
+              "type": "number",
+              "format": "double"
+            },
+            "qteDeuxiemeChoix": {
+              "type": "number",
+              "format": "double"
+            },
+            "nbreColis": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "numPaquet": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "paquetId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "colisId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "complement": {
+              "type": "boolean"
+            },
+            "quantite": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "operation": {
+              "type": "string"
+            },
+            "observations": {
+              "type": "string"
+            },
+            "tailleId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "couleurId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "ordrePaquet": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "numMatelasPaquet": {
+              "type": "string"
+            },
+            "nature": {
+              "type": "string"
+            }
+          }
+        },
+        "ProductionHeureValue": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "quantite": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "observation": {
+              "type": "string"
+            },
+            "elementPlanningId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "ofId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "chaineId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "partieInterreseId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "produitId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "periode": {
+              "type": "string"
+            },
+            "productionHeureDetails": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ProductionHeureDetailsValue"
+              }
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "description": "JWT auth descirption",
+          "in": "header",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    }
+  }

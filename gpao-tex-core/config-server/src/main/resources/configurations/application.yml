@@ -1,0 +1,21 @@
+eureka:
+  instance:
+    hostname: 188.40.173.211
+  client:
+    service-url:
+      defaultZone: http://188.40.173.211:8668/eureka
+spring:
+  cloud:
+    config:
+      override-system-properties: false
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    prometheus:
+      enabled: true

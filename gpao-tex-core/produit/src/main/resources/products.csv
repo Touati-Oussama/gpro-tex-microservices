@@ -1,0 +1,2 @@
+id,partieInteresseId,reference,designation,sansCouleur,sansTaille,quantite,prixUnitaire
+1,1,refcsv,desicsv,false,false,30,10

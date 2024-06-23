@@ -1,0 +1,43 @@
+server:
+  port: 5656
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/gpao-realm
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://188.40.173.211:5454/ordre
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway.route.RouteDefinitionLocator: INFO
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.security: DEBUG
+    io.micrometer: TRACE
+
+jwt:
+  auth:
+    converter:
+      resource-id: gpao-client
+      principle-attribute: preferred_username
+
+application:
+  config:
+    pi-url: http://localhost:4444/api/operations/pi
+    pd-url: http://localhost:4444/api/produit/pd
+    sfpd-url: http://localhost:4444/api/produit/sfpd
+    site-url: http://localhost:4444/api/produit/site
+    couleur-url: http://localhost:4444/api/produit/couleur
+    taille-url: http://localhost:4444/api/produit/taille

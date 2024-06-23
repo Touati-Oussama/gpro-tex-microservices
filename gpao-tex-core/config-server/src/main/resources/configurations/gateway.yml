@@ -1,0 +1,58 @@
+server:
+  port: 4444
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: partie-prenante-service
+          uri: lb://partie-prenante-service
+          predicates:
+            - Path=/api/operations/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: partie-prenante-service
+                fallbackUri: forward:/cb/partiePrenanteServiceFallBack
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/produit/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: product-service
+                fallbackUri: forward:/cb/productServiceFallBack
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: order-service
+                fallbackUri: forward:/cb/orderServiceFallBack
+        - id: production-service
+          uri: lb://production-service
+          predicates:
+            - Path=/api/production/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: production-service
+                fallbackUri: forward:/cb/productionServiceFallBack
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/gpao-realm
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway.route.RouteDefinitionLocator: INFO
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.security: DEBUG
+    io.micrometer: TRACE
+
