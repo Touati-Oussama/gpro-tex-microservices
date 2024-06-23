@@ -48,7 +48,7 @@ clean-job:
     - echo "Terminating any process on port 6767..."
     - if lsof -i:6767; then kill -9 $(lsof -ti:6767); fi
   tags:
-    - gpro-tex-runner
+    - GPRO-RUNNER
 
 build-job:
   stage: build
@@ -74,7 +74,7 @@ build-job:
     - echo "Passing to compiling the production service code..."
     - cd ../production && mvn package -DskipTests
   tags:
-    - gpro-tex-runner
+    - GPRO-RUNNER
 
 deploy-config-server-job:
   stage: deploy
@@ -90,7 +90,7 @@ deploy-config-server-job:
   variables:
     GIT_STRATEGY: none
   tags:
-    - gpro-tex-runner
+    - GPRO-RUNNER
 
 deploy-discovery-service-job:
   stage: deploy
@@ -106,7 +106,7 @@ deploy-discovery-service-job:
   variables:
     GIT_STRATEGY: none
   tags:
-    - gpro-tex-runner
+    - GPRO-RUNNER
 deploy-gateway-service-job:
     stage: deploy
     script: 
@@ -124,7 +124,7 @@ deploy-gateway-service-job:
     variables:
       GIT_STRATEGY: none
     tags:
-    - gpao-runner
+    - GPRO-RUNNER
     
 deploy-production-service-job:
     stage: deploy
@@ -141,7 +141,7 @@ deploy-production-service-job:
     variables:
       GIT_STRATEGY: none
     tags:
-    - gpro-tex-runner
+    - GPRO-RUNNER
 
 deploy-product-service-job:
     stage: deploy
@@ -160,7 +160,7 @@ deploy-product-service-job:
     variables:
       GIT_STRATEGY: none
     tags:
-    - gpro-tex-runner
+    - GPRO-RUNNER
 
 deploy-partie-prenante-service-job:
     stage: deploy
@@ -177,7 +177,7 @@ deploy-partie-prenante-service-job:
     variables:
       GIT_STRATEGY: none
     tags:
-    - gpro-tex-runner
+    - GPRO-RUNNER
 
 deploy-order-service-job:
     stage: deploy
@@ -194,4 +194,4 @@ deploy-order-service-job:
     variables:
       GIT_STRATEGY: none
     tags:
-    - gpro-tex-runner
+    - GPRO-RUNNER
