@@ -6,36 +6,43 @@ stages:
 clean-job:
   stage: clean
   script:
+     #Config-server
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 10000..."
-    - if lsof -i:10000; then kill -9 $(lsof -ti:10000); fi 
-
+    - if lsof -i:10000; then kill -9 $(lsof -ti:10000); fi
+    
+      #Discovery-service
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 8668..."
     - if lsof -i:8668; then kill -9 $(lsof -ti:8668); fi
 
+      #Gateway
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 4444..."
     - if lsof -i:4444; then kill -9 $(lsof -ti:4444); fi
 
+      #Order
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 5656..."
     - if lsof -i:5656; then kill -9 $(lsof -ti:5656); fi
 
+      #Pi
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 3434..."
     - if lsof -i:3434; then kill -9 $(lsof -ti:3434); fi
 
+      #Product
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 2323..."
     - if lsof -i:2323; then kill -9 $(lsof -ti:2323); fi
 
+      #Production
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 6767..."
