@@ -9,7 +9,7 @@ clean-job:
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 10000..."
-    - if lsof -i:10000; then kill -9 $(lsof -ti:10000); fi
+    - if lsof -i:10000; then kill -9 $(lsof -ti:10000); fi 
 
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
