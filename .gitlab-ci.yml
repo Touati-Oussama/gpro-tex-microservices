@@ -3,46 +3,39 @@ stages:
   - build
   - deploy
 
-clean-job:       
+clean-job:
   stage: clean
   script:
-      #Config-server
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 10000..."
     - if lsof -i:10000; then kill -9 $(lsof -ti:10000); fi
-    
-      #Discovery-service
+
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 8668..."
     - if lsof -i:8668; then kill -9 $(lsof -ti:8668); fi
 
-      #Gateway
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 4444..."
     - if lsof -i:4444; then kill -9 $(lsof -ti:4444); fi
 
-      #Order
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 5656..."
     - if lsof -i:5656; then kill -9 $(lsof -ti:5656); fi
 
-      #Pi
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 3434..."
     - if lsof -i:3434; then kill -9 $(lsof -ti:3434); fi
 
-      #Product
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 2323..."
     - if lsof -i:2323; then kill -9 $(lsof -ti:2323); fi
 
-      #Production
     - echo "Stopping application process..."
     - if [ -f app.pid ]; then kill -9 $(cat app.pid); fi
     - echo "Terminating any process on port 6767..."
@@ -53,145 +46,74 @@ clean-job:
 build-job:
   stage: build
   script:
+    - mkdir -p artifacts
     - echo "Compiling the config server code..."
     - cd gpao-tex-core/config-server && mvn package -DskipTests
     - echo "Compile complete."
-    - echo "Passing to compiling the discovery service code..."
+    - mv target/config-server-1.0.0.jar ../../../artifacts/
+
+    - echo "Compiling the discovery service code..."
     - cd ../discovery && mvn package -DskipTests
     - echo "Compile complete."
-    - echo "Passing to compiling the gateway service code..."
+    - mv target/discovery-1.0.0.jar ../../../artifacts/
+
+    - echo "Compiling the gateway service code..."
     - cd ../gateway && mvn package -DskipTests
     - echo "Compile complete."
-    - echo "Passing to compiling the partie-prenante service code..."
+    - mv target/gateway-1.0.0.jar ../../../artifacts/
+
+    - echo "Compiling the partie-prenante service code..."
     - cd ../partie-prenante && mvn package -DskipTests
     - echo "Compile complete."
-    - echo "Passing to compiling the produit service code..."
+    - mv target/partie-prenante-1.0.0.jar ../../../artifacts/
+
+    - echo "Compiling the produit service code..."
     - cd ../produit && mvn package -DskipTests
     - echo "Compile complete."
-    - echo "Passing to compiling the ordre service code..."
+    - mv target/produit-1.0.0.jar ../../../artifacts/
+
+    - echo "Compiling the ordre service code..."
     - cd ../ordre && mvn package -DskipTests
     - echo "Compile complete."
-    - echo "Passing to compiling the production service code..."
+    - mv target/ordre-1.0.0.jar ../../../artifacts/
+
+    - echo "Compiling the production service code..."
     - cd ../production && mvn package -DskipTests
+    - echo "Compile complete."
+    - mv target/production-1.0.0.jar ../../../artifacts/
   tags:
     - GPRO-RUNNER
 
 deploy-config-server-job:
   stage: deploy
   script:
-    - cd gpao-tex-core/config-server
-    - echo "Deploying the code...."
-    - nohup java -jar target/config-server-1.0.0.jar > config-server.log 2>&1 & 
+    - cd artifacts
+    - echo "Deploying the config server code...."
+    - nohup java -jar config-server-1.0.0.jar > config-server.log 2>&1 & 
     - sleep 30
-    -  - echo "Checking application health..."
-    - curl -f http://localhost:10000/actuator/health || (echo "Application failed to start" && cat config-server.log && exit1)
+    - echo "Checking application health..."
+    - curl -f http://localhost:10000/actuator/health || (echo "Application failed to start" && cat config-server.log && exit 1)
   needs:
-    - clean-job
+    - build-job
   variables:
     GIT_STRATEGY: none
   tags:
     - GPRO-RUNNER
 
-deploy-discovery-service-job:
+deploy-discovery-job:
   stage: deploy
   script:
-    - cd gpao-tex-core/discovery
-    - echo "Deploying the code..."
-    - nohup java -jar target/discovery-1.0.0.jar > config-server.log 2>&1 &
-    - sleep 30 
-    - curl -f http://localhost:8668/actuator/health || (echo "Application failed to start" && exit 1)
+    - cd artifacts
+    - echo "Deploying the discovery service code...."
+    - nohup java -jar discovery-1.0.0.jar > discovery.log 2>&1 & 
+    - sleep 30
+    - echo "Checking application health..."
+    - curl -f http://localhost:8668/actuator/health || (echo "Application failed to start" && cat discovery.log && exit 1)
   needs:
-    - clean-job
-    - deploy-config-server-job
+    - build-job
   variables:
     GIT_STRATEGY: none
   tags:
     - GPRO-RUNNER
-deploy-gateway-service-job:
-    stage: deploy
-    script: 
-      - cd gpao-tex-core/gateway/target
-      - echo "Deploying the code..."
-      - ls
-      - nohup java -jar gateway-1.0.0.jar > config-server.log 2>&1 &
-      - sleep 80  
-      - cat config-server.log
-      - curl -f http://localhost:4444/actuator/health || (echo "Application failed to start" && exit 1)
-    needs:
-      - clean-job
-      - deploy-config-server-job
-      - deploy-discovery-service-job
-    variables:
-      GIT_STRATEGY: none
-    tags:
-    - GPRO-RUNNER
-    
-deploy-production-service-job:
-    stage: deploy
-    script: 
-      - cd gpao-tex-core/production
-      - echo "Deploying the code..."
-      - nohup java -jar target/production-1.0.0.jar > /dev/null 2>&1 & 
-      - sleep 60  
-      - curl -f http://localhost:6767/actuator/health || (echo "Application failed to start" && exit 1)
-    needs:
-      - clean-job
-      - deploy-config-server-job
-      - deploy-discovery-service-job
-    variables:
-      GIT_STRATEGY: none
-    tags:
-    - GPRO-RUNNER
 
-deploy-product-service-job:
-    stage: deploy
-    script: 
-      - cd gpao-tex-core/produit/target
-      - echo "Deploying the code..."
-      - ls
-      - nohup java -jar produit-1.0.0.jar > config-server.log 2>&1 &
-      - sleep 80  
-      - cat config-server.log
-      - curl -f http://localhost:2323/actuator/health || (echo "Application failed to start" && exit 1)
-    needs:
-      - clean-job
-      - deploy-config-server-job
-      - deploy-discovery-service-job
-    variables:
-      GIT_STRATEGY: none
-    tags:
-    - GPRO-RUNNER
-
-deploy-partie-prenante-service-job:
-    stage: deploy
-    script: 
-      - cd gpao-tex-core/partie-prenante
-      - echo "Deploying the code..."
-      - nohup java -jar target/partie-prenante-1.0.0.jar > /dev/null 2>&1 & 
-      - sleep 60  
-      - curl -f http://localhost:3434/actuator/health || (echo "Application failed to start" && cat config-server.log && exit1 )
-    needs:
-      - clean-job
-      - deploy-config-server-job
-      - deploy-discovery-service-job
-    variables:
-      GIT_STRATEGY: none
-    tags:
-    - GPRO-RUNNER
-
-deploy-order-service-job:
-    stage: deploy
-    script: 
-      - cd gpao-tex-core/ordre
-      - echo "Deploying the code..."
-      - nohup java -jar target/ordre-1.0.0.jar > /dev/null 2>&1 & 
-      - sleep 60  
-      - curl -f http://localhost:5656/actuator/health || (echo "Application failed to start" && exit 1)
-    needs:
-      - clean-job
-      - deploy-config-server-job
-      - deploy-discovery-service-job
-    variables:
-      GIT_STRATEGY: none
-    tags:
-    - GPRO-RUNNER
+# Add similar deploy jobs for other services as needed
