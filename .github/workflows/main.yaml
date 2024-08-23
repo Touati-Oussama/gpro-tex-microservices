@@ -79,7 +79,8 @@ jobs:
       # Push to Dokcer Hub
       - name: Puh Docker Image for Config Service to Docker Hub
         uses: actions/build-push-action:v2
-        context: ./gpao-tex-core/config-server
-        dockerfile: Dockerfile
-        push: true
-        tags: gpro/config-service:latest
+        with: 
+          context: ./gpao-tex-core/config-server
+          dockerfile: Dockerfile
+          push: true
+          tags: gpro/config-service:latest
