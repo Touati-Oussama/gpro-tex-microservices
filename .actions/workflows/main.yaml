@@ -1,0 +1,47 @@
+name: Build & Deploy Microservices App
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-deploy:
+    name: Build & Deploy Spring boot Microservice App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distrubtion: 'corretto'
+          java-version: 17
+
+      - name: Build Config Service
+        run: mvn clean package -DskipTests
+        working-directory: ./config-server
+
+      - name: Build Discovery Service
+        run: mvn clean package -DskipTests
+        working-directory: ./discovery
+
+      - name: Build Gateway Service
+        run: mvn clean package -DskipTests
+        working-directory: ./gateway
+
+      - name: Build Ordre Service
+        run: mvn clean package -DskipTests
+        working-directory: ./ordre
+
+      - name: Build Partie Prenant Service
+        run: mvn clean package -DskipTests
+        working-directory: ./partie-prenante
+
+      - name: Build Produit Service
+        run: mvn clean package -DskipTests
+        working-directory: ./produit
+
+      - name: Build Production Service
+        run: mvn clean package -DskipTests
+        working-directory: ./production

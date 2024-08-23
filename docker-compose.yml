@@ -1,6 +1,6 @@
 services:
   gpro-dicovery-service:
-    build: ./gpao-tex-core/discovery
+    image: gpro/discovery-service
     container_name: gpro-discovery-service
     ports:
       - '8668:8668'
@@ -15,7 +15,7 @@ services:
   
 
   gpro-config-service:
-    build: ./gpao-tex-core/config-server
+    image: gpro/config-service
     container_name: gpro-config-service
     ports:
       - '10000:10000'
@@ -52,7 +52,7 @@ services:
 
   
   gpro-ordre-service:
-    build: ./gpao-tex-core/ordre
+    image: gpro/ordre-service
     container_name: gpro-ordre-service
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
@@ -74,7 +74,7 @@ services:
     network_mode: "service:localhsot"
 
   gpro-partie-prenante-service:
-    build: ./gpao-tex-core/partie-prenante
+    image: gpro/partie-prenante-service
     container_name: gpro-partie-prenante-service
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
@@ -96,7 +96,7 @@ services:
     network_mode: "service:localhsot"
 
   gpro-production-service:
-    build: ./gpao-tex-core/production
+    image: gpro/production-service
     container_name: gpro-production-service
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
@@ -118,7 +118,7 @@ services:
     network_mode: "service:localhsot"
 
   gpro-produit-service:
-    build: ./gpao-tex-core/produit
+    image: gpro/produit-service
     container_name: gpro-produit-service
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
@@ -140,7 +140,7 @@ services:
     network_mode: "service:localhsot"
 
   gpro-gateway-service:
-    build: ./gpao-tex-core/gateway
+    image: gpro/gateway-service
     container_name: gpro-gateway-service
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
