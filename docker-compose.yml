@@ -1,6 +1,6 @@
 services:
   gpro-dicovery-service:
-    image: gpro/discovery-service
+    image: touatioussama/gpro-discovery-service
     container_name: gpro-discovery-service
     ports:
       - '8668:8668'
@@ -15,7 +15,7 @@ services:
   
 
   gpro-config-service:
-    image: gpro/config-service
+    image: touatioussama/gpro-config-service
     container_name: gpro-config-service
     ports:
       - '10000:10000'
@@ -52,7 +52,7 @@ services:
 
   
   gpro-ordre-service:
-    image: gpro/ordre-service
+    image: touatioussama/gpro-ordre-service
     container_name: gpro-ordre-service
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
@@ -74,7 +74,7 @@ services:
     network_mode: "service:localhsot"
 
   gpro-partie-prenante-service:
-    image: gpro/partie-prenante-service
+    image: touatioussama/gpro-partie-prenante-service
     container_name: gpro-partie-prenante-service
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
@@ -96,7 +96,7 @@ services:
     network_mode: "service:localhsot"
 
   gpro-production-service:
-    image: gpro/production-service
+    image: touatioussama/gpro-production-service
     container_name: gpro-production-service
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
@@ -118,7 +118,7 @@ services:
     network_mode: "service:localhsot"
 
   gpro-produit-service:
-    image: gpro/produit-service
+    image: touatioussama/gpro-produit-service
     container_name: gpro-produit-service
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
@@ -140,7 +140,7 @@ services:
     network_mode: "service:localhsot"
 
   gpro-gateway-service:
-    image: gpro/gateway-service
+    image: touatioussama/gpro-gateway-service
     container_name: gpro-gateway-service
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
