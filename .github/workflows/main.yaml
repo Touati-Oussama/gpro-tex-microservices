@@ -20,7 +20,7 @@ jobs:
 
       - name: Build Config Service
         run: mvn clean package -DskipTests
-        working-directory: ./config-server
+        working-directory: ./gpao-tex-core/config-server
 
       - name: Build Discovery Service
         run: mvn clean package -DskipTests
