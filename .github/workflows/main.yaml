@@ -92,7 +92,7 @@ jobs:
       - name: Build Docker images
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-config-service:latest ./gpao-tex-core/config-server
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-discovery-service:latest ./gpao-tex-core/discovery-service
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-discovery-service:latest ./gpao-tex-core/discovery
       
       - name: Push Docker images
         run: |
