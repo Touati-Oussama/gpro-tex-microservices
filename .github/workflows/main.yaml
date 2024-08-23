@@ -18,6 +18,7 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
+   
       - name: Build Config Service
         run: mvn clean package -DskipTests
         working-directory: ./gpao-tex-core/config-server
@@ -32,7 +33,7 @@ jobs:
 
       - name: Build Ordre Service
         run: mvn clean package -DskipTests
-        working-directory: ./ordre
+        working-directory: ./gpao-tex-core/ordre
 
       - name: Build Partie Prenant Service
         run: mvn clean package -DskipTests
