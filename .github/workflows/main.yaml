@@ -24,11 +24,11 @@ jobs:
 
       - name: Build Discovery Service
         run: mvn clean package -DskipTests
-        working-directory: ./discovery
+        working-directory: ./gpao-tex-core/discovery
 
       - name: Build Gateway Service
         run: mvn clean package -DskipTests
-        working-directory: ./gateway
+        working-directory: ./gpao-tex-core/gateway
 
       - name: Build Ordre Service
         run: mvn clean package -DskipTests
@@ -36,12 +36,12 @@ jobs:
 
       - name: Build Partie Prenant Service
         run: mvn clean package -DskipTests
-        working-directory: ./partie-prenante
+        working-directory: ./gpao-tex-core/partie-prenante
 
       - name: Build Produit Service
         run: mvn clean package -DskipTests
-        working-directory: ./produit
+        working-directory: ./gpao-tex-core/produit
 
       - name: Build Production Service
         run: mvn clean package -DskipTests
-        working-directory: ./production
+        working-directory: ./gpao-tex-core/production
