@@ -20,7 +20,7 @@ public class PartieInteresseeController {
 
     @GetMapping("/hello")
     public String hello(){
-        return "Hello world Test CI/CD";
+        return "Hello world Test CI/CD 2";
     }
     @PostMapping("/creerPi")
     public ResponseEntity<String> createPi(@RequestBody @Valid PartieInteresseValue request) {
