@@ -23,47 +23,55 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
-
-      - name: Test & Build Config Service
+      - name: Test & Build All Services
         run: |
-          mvn -B test --file pom.xml 
-          mvn clean package -DskipTests
-        working-directory: ./gpao-tex-core/config-server
+          for service in config-server discovery gateway ordre partie-prenante produit production; do
+            echo "Building $service"
+            mvn -B test --file ./gpao-tex-core/$service/pom.xml
+            mvn clean package -DskipTests --file ./gpao-tex-core/$service/pom.xml
+          done
 
-      - name: Test & Build Discovery Service
-        run: |
-          mvn -B test --file pom.xml
-          mvn clean package -DskipTests
-        working-directory: ./gpao-tex-core/discovery
 
-      - name: Test & Build Gateway Service
-        run: |
-          mvn clean package -DskipTests
-        working-directory: ./gpao-tex-core/gateway
-
-      - name: Test & Build Ordre Service
-        run: |
-          mvn -B test --file pom.xml
-          mvn clean package -DskipTests
-        working-directory: ./gpao-tex-core/ordre
-
-      - name: Test & Build Partie Prenant Service
-        run: |
-          mvn -B test --file pom.xml
-          mvn clean package -DskipTests
-        working-directory: ./gpao-tex-core/partie-prenante
-
-      - name: Test & Build Produit Service
-        run: |
-          mvn -B test --file pom.xml 
-          mvn clean package -DskipTests
-        working-directory: ./gpao-tex-core/produit
-
-      - name: Test & Build Production Service
-        run: |
-          mvn -B test --file pom.xml
-          mvn clean package -DskipTests
-        working-directory: ./gpao-tex-core/production
+#      - name: Test & Build Config Service
+#        run: |
+#          mvn -B test --file pom.xml
+#          mvn clean package -DskipTests
+#        working-directory: ./gpao-tex-core/config-server
+#
+#      - name: Test & Build Discovery Service
+#        run: |
+#          mvn -B test --file pom.xml
+#          mvn clean package -DskipTests
+#        working-directory: ./gpao-tex-core/discovery
+#
+#      - name: Test & Build Gateway Service
+#        run: |
+#          mvn clean package -DskipTests
+#        working-directory: ./gpao-tex-core/gateway
+#
+#      - name: Test & Build Ordre Service
+#        run: |
+#          mvn -B test --file pom.xml
+#          mvn clean package -DskipTests
+#        working-directory: ./gpao-tex-core/ordre
+#
+#      - name: Test & Build Partie Prenant Service
+#        run: |
+#          mvn -B test --file pom.xml
+#          mvn clean package -DskipTests
+#        working-directory: ./gpao-tex-core/partie-prenante
+#
+#      - name: Test & Build Produit Service
+#        run: |
+#          mvn -B test --file pom.xml
+#          mvn clean package -DskipTests
+#        working-directory: ./gpao-tex-core/produit
+#
+#      - name: Test & Build Production Service
+#        run: |
+#          mvn -B test --file pom.xml
+#          mvn clean package -DskipTests
+#        working-directory: ./gpao-tex-core/production
 
       # Docker login step (if necessary for private repositories)
       - name: Log in to Docker Hub
