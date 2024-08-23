@@ -2,6 +2,7 @@ services:
   gpro-dicovery-service:
     image: touatioussama/gpro-discovery-service
     container_name: gpro-discovery-service
+    pull_policy: always
     ports:
       - '8668:8668'
     expose:
@@ -17,6 +18,7 @@ services:
   gpro-config-service:
     image: touatioussama/gpro-config-service
     container_name: gpro-config-service
+    pull_policy: always
     ports:
       - '10000:10000'
     expose:
@@ -54,6 +56,7 @@ services:
   gpro-ordre-service:
     image: touatioussama/gpro-ordre-service
     container_name: gpro-ordre-service
+    pull_policy: always
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
       - CONFIG_SERVICE_URL=http://gpro-config-service:10000
@@ -76,6 +79,7 @@ services:
   gpro-partie-prenante-service:
     image: touatioussama/gpro-partie-prenante-service
     container_name: gpro-partie-prenante-service
+    pull_policy: always
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
       - CONFIG_SERVICE_URL=http://gpro-config-service:10000
@@ -98,6 +102,7 @@ services:
   gpro-production-service:
     image: touatioussama/gpro-production-service
     container_name: gpro-production-service
+    pull_policy: always
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
       - CONFIG_SERVICE_URL=http://gpro-config-service:10000
@@ -120,6 +125,7 @@ services:
   gpro-produit-service:
     image: touatioussama/gpro-produit-service
     container_name: gpro-produit-service
+    pull_policy: always
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
       - CONFIG_SERVICE_URL=http://gpro-config-service:10000
@@ -142,6 +148,7 @@ services:
   gpro-gateway-service:
     image: touatioussama/gpro-gateway-service
     container_name: gpro-gateway-service
+    pull_policy: always
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
       - CONFIG_SERVICE_URL=http://gpro-config-service:10000
