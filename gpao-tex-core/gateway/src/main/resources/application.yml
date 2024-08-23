@@ -1,5 +1,46 @@
-spring:
-  config:
-    import: optional:configserver:http://localhost:10000
-  application:
-    name: gateway
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: partie-prenante-service
+#          uri: lb://partie-prenante
+#          #uri: http://localhost:3434/
+#          predicates:
+#            - Path=/api/operations/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: partie-prenante-service
+#                fallbackUri: forward:/cb/partiePrenanteServiceFallBack
+#        - id: product-service
+#          uri: lb://product-service
+#          predicates:
+#            - Path=/api/produit/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: product-service
+#                fallbackUri: forward:/cb/productServiceFallBack
+#        - id: order-service
+#          uri: lb://order-service
+#          predicates:
+#            - Path=/api/order/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: order-service
+#                fallbackUri: forward:/cb/orderServiceFallBack
+#        - id: production-service
+#          uri: lb://production-service
+#          predicates:
+#            - Path=/api/production/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: production-service
+#                fallbackUri: forward:/cb/productionServiceFallBack
+
+
+
+
+

@@ -42,9 +42,9 @@ public class KeycloakSecurityConfig {
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/operations/pi/**").hasAnyRole("Admin", "Responsable_commercial")
-                        .anyRequest()  // All unmatched URLs
-                        .hasRole("Admin") // Require "Admin" role for access
+                        .requestMatchers("/api/operations/pi/**").hasAnyAuthority("Admin", "Responsable_commercial")
+                        .anyRequest() // All unmatched URLs
+                        .hasAuthority("Admin") // Require "Admin" role for access
                 );
         http.oauth2ResourceServer(server -> server.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter)));
         http.sessionManagement(session -> session.sessionCreationPolicy(STATELESS));

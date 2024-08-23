@@ -15,7 +15,7 @@ public class ThemeMapper {
 
         return Theme.builder()
                 .id(themeValue.getId())
-                .produit(Produit.builder().id(themeValue.getProduitId()).build())
+                //.produit(Produit.builder().id(themeValue.getProduitId()).build())
                 .designation(themeValue.getDesignation())
                 .spl(themeValue.getSpl())
                 .build();

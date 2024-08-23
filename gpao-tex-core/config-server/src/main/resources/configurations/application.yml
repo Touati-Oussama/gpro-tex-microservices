@@ -1,21 +1,32 @@
-eureka:
-  instance:
-    hostname: 188.40.173.211
-  client:
-    service-url:
-      defaultZone: http://188.40.173.211:8668/eureka
 spring:
   cloud:
+    discovery:
+      enabled: true
     config:
-      override-system-properties: false
+      enabled: true
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVICE_URL:http://localhost:8668/eureka}
 management:
-  tracing:
-    sampling:
-      probability: 1.0
   endpoints:
     web:
       exposure:
-        include: '*'
-  endpoint:
-    prometheus:
-      enabled: true
+        include: *
+  tracing:
+    sampling:
+      probability: 1.0
+endpoint:
+  prometheus:
+    enabled: true
+
+
+
+
+
+
+
+
+

@@ -92,7 +92,8 @@ public class ProduitMapper {
                 produit.getCadence(),
                 produit.getPrixUnitaire(),
                 produit.getPrixMajore(),
-                produit.getEtat()
+                produit.getEtat(),
+                produit.getPartieInteresse()
         );
     }
 

@@ -3,9 +3,13 @@ package com.gpro.consulting.gateway.configuration.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtDecoders;
+import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -28,13 +32,16 @@ public class SecurityConfiguration {
                 conf.addAllowedHeader(CorsConfiguration.ALL);
                 return conf;
             });
-        }).csrf(csrf -> csrf.disable()).authorizeExchange(requests -> requests
+        }).csrf(csrf -> csrf.disable())
+                .authorizeExchange(requests -> requests
                 .pathMatchers(
                         "/eureka/**",
                         "/actuator/**")
                 .permitAll()
-                .anyExchange().authenticated());
-        http.oauth2ResourceServer().jwt();
+                .anyExchange().authenticated())
+                .oauth2ResourceServer((oAuth2 -> oAuth2.jwt(Customizer.withDefaults())));
         return http.build();
     }
-}
+    }
+
+

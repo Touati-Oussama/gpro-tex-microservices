@@ -18,6 +18,10 @@ public class PartieInteresseeController {
 
     private final PartieInteresseeService service;
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello world";
+    }
     @PostMapping("/creerPi")
     public ResponseEntity<String> createPi(@RequestBody @Valid PartieInteresseValue request) {
         return ResponseEntity.ok(service.createPi(request));
@@ -28,7 +32,7 @@ public class PartieInteresseeController {
         return ResponseEntity.ok(service.updatePi(request));
     }
 
-    @GetMapping(path = "/find/by/{id}")
+    @GetMapping(path = "/find/by/{id}", produces = "application/json")
     public ResponseEntity<Optional<PartieInteresseValue>> findPiById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }

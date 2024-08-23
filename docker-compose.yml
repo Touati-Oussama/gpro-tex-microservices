@@ -1,0 +1,228 @@
+services:
+  gpro-dicovery-service:
+    build: ./gpao-tex-core/discovery
+    container_name: gpro-discovery-service
+    ports:
+      - '8668:8668'
+    expose:
+      - '8668'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8668/actuator/health"]
+      interval: 10s
+      retries: 4
+    networks:
+      - microservice-net
+  
+
+  gpro-config-service:
+    build: ./gpao-tex-core/config-server
+    container_name: gpro-config-service
+    ports:
+      - '10000:10000'
+    expose:
+      - '10000'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
+    depends_on:
+      gpro-dicovery-service:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:10000/actuator/health" ]
+      interval: 10s
+      retries: 4
+    networks:
+      - microservice-net
+
+  localhsot:
+    image: alpine:latest
+    command: sleep infinity
+    ports:
+      - '8080:8080'
+      - '5656:5656'
+      - '4444:4444'
+      - '3434:3434'
+      - '6767:6767'
+      - '2323:2323'
+      - "9411:9411"
+      - "9090:9090"
+      - "3000:3000"
+    networks:
+      - microservice-net
+
+
+  
+  gpro-ordre-service:
+    build: ./gpao-tex-core/ordre
+    container_name: gpro-ordre-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
+      - CONFIG_SERVICE_URL=http://gpro-config-service:10000
+      #- SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/ordre
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      #- KEYCLOAK_ISSUER_URI=http://keycloak-auth:8080/realms/gpao-realm}
+      #- KEYCLOAK_SET_URI=http://keycloak-auth:8080/realms/gpao-realm/protocol/openid-connect/certs
+    depends_on:
+      gpro-config-service:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5656/actuator/health" ]
+      interval: 10s
+      retries: 4
+    network_mode: "service:localhsot"
+
+  gpro-partie-prenante-service:
+    build: ./gpao-tex-core/partie-prenante
+    container_name: gpro-partie-prenante-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
+      - CONFIG_SERVICE_URL=http://gpro-config-service:10000
+      #- SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/partie-prenante
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      #- KEYCLOAK_ISSUER_URI=http://keycloak-auth:8080/realms/gpao-realm}
+      #- KEYCLOAK_SET_URI=http://keycloak-auth:8080/realms/gpao-realm/protocol/openid-connect/certs
+    depends_on:
+      gpro-config-service:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3434/actuator/health" ]
+      interval: 10s
+      retries: 4
+    network_mode: "service:localhsot"
+
+  gpro-production-service:
+    build: ./gpao-tex-core/production
+    container_name: gpro-production-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
+      - CONFIG_SERVICE_URL=http://gpro-config-service:10000
+      #- SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/production
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      #- KEYCLOAK_ISSUER_URI=http://keycloak-auth:8080/realms/gpao-realm}
+      #- KEYCLOAK_SET_URI=http://keycloak-auth:8080/realms/gpao-realm/protocol/openid-connect/certs
+    depends_on:
+      gpro-config-service:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:6767/actuator/health" ]
+      interval: 10s
+      retries: 4
+    network_mode: "service:localhsot"
+
+  gpro-produit-service:
+    build: ./gpao-tex-core/produit
+    container_name: gpro-produit-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
+      - CONFIG_SERVICE_URL=http://gpro-config-service:10000
+      #- SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/produit
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      #- KEYCLOAK_ISSUER_URI=http://keycloak-auth:8080/realms/gpao-realm}
+      #- KEYCLOAK_SET_URI=http://keycloak-auth:8080/realms/gpao-realm/protocol/openid-connect/certs
+    depends_on:
+      gpro-config-service:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:2323/actuator/health" ]
+      interval: 10s
+      retries: 4
+    network_mode: "service:localhsot"
+
+  gpro-gateway-service:
+    build: ./gpao-tex-core/gateway
+    container_name: gpro-gateway-service
+    environment:
+      - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
+      - CONFIG_SERVICE_URL=http://gpro-config-service:10000
+      #- KEYCLOAK_ISSUER_URI=http://keycloak-auth:8080/realms/gpao-realm}
+      #- KEYCLOAK_SET_URI=http://keycloak-auth:8080/realms/gpao-realm/protocol/openid-connect/certs
+    depends_on:
+      gpro-config-service:
+        condition: service_healthy
+    network_mode: "service:localhsot"
+
+  #postgreSQL
+  postgres:
+    container_name: db
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - microservice-net
+
+  #keyclock
+  keycloak:
+    container_name: keycloak-auth
+    image: quay.io/keycloak/keycloak:25.0
+    restart: always
+    environment:
+      KEYCLOAK_CREATE_ADMIN: true
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+    command:
+      - "start-dev"
+    network_mode: "service:localhsot"
+
+  #zipkins
+  zipkin:
+    image: openzipkin/zipkin
+    restart: always
+    container_name: zipkin
+    network_mode: "service:localhsot"
+
+  #prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./ressources/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - gpro-gateway-service
+      - gpro-ordre-service
+      - gpro-partie-prenante-service
+      - gpro-production-service
+      - gpro-produit-service
+    network_mode: "service:localhsot"
+
+  #grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana:/etc/grafana/provisioning/datasources
+    network_mode: "service:localhsot"
+
+networks:
+  microservice-net:
+    driver: bridge
+
+volumes:
+  postgres:
+  keycloak-data:
+    
+    

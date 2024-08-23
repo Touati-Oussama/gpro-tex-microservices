@@ -19,12 +19,16 @@ public class OrdreFabricationController {
 
     private final OrdreFabricationService service;
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello";
+    }
     @PostMapping("/createOf")
     public ResponseEntity<String> createOf(@RequestBody @Valid OrdreFabricationValue request) {
         return ResponseEntity.ok(service.createOf(request));
     }
 
-    @GetMapping(path = "/find/by/{id}")
+    @GetMapping(path = "/find/by/{id}", produces ="application/json")
     public ResponseEntity<OrdreFabricationValue> findOfById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }

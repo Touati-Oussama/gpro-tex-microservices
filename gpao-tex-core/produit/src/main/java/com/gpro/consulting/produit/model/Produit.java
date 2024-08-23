@@ -1,5 +1,6 @@
 package com.gpro.consulting.produit.model;
 
+import com.gpro.consulting.produit.dto.PartieInteresseValue;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -53,6 +54,9 @@ public class Produit extends BaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "produit", cascade = CascadeType.REMOVE)
     private List<ElementTraitement> elementTraitements;
+
+    @Transient
+    private PartieInteresseValue partieInteresse;
 
     private Long partieInteresseId;
     private String reference;

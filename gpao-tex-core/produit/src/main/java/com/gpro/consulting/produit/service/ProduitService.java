@@ -112,8 +112,9 @@ public class ProduitService {
         CriteriaQuery<Produit> criteriaQuery = criteriaBuilder.createQuery(Produit.class);
         Root<Produit> root = criteriaQuery.from(Produit.class);
         List<Predicate> predicates = new ArrayList<>();
-        Optional<PartieInteresseValue> pi = piClient.findPiById(produitValue.getId());
-        pi.ifPresent(partieInteresseValue -> predicates.add(criteriaBuilder.equal(root.get("partieInteresse"), partieInteresseValue.getId())));
+        Optional<PartieInteresseValue> pi = piClient.findPiById(produitValue.getPartieInteresseId());
+        System.out.println(pi);
+        //pi.ifPresent(partieInteresseValue -> predicates.add(criteriaBuilder.equal(root.get("partieInteresse"), partieInteresseValue)));
         if (StringUtils.isNotBlank(produitValue.getReference())) {
             predicates.add(criteriaBuilder.like(root.get("reference"), "%" + produitValue.getReference() + "%"));
         }
@@ -148,6 +149,9 @@ public class ProduitService {
         criteriaQuery.select(root).where(predicates.toArray(new Predicate[0]));
         criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
         List<Produit> result = em.createQuery(criteriaQuery).getResultList();
+        result.forEach(produit -> {
+            produit.setPartieInteresse(pi.get());
+        });
         return produitMapper.fromProduitList(result);
     }
 }

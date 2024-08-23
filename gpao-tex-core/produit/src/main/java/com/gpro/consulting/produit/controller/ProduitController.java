@@ -24,7 +24,7 @@ public class ProduitController {
         return ResponseEntity.ok(service.createProduit(request));
     }
 
-    @GetMapping(path = "/find/by/{id}")
+    @GetMapping(path = "/find/by/{id}", produces ="application/json")
     public ResponseEntity<ProduitValue> findProduitById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }

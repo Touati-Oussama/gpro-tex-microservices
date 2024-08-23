@@ -20,7 +20,7 @@ public class TailleController {
         return ResponseEntity.ok(service.createTaille(request));
     }
 
-    @GetMapping(path = "/find/by/{id}")
+    @GetMapping(path = "/find/by/{id}", produces ="application/json")
     public ResponseEntity<TailleValue> findTailleById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }

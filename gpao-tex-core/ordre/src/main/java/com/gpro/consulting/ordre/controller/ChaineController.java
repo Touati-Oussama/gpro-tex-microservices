@@ -21,7 +21,7 @@ public class ChaineController {
         return ResponseEntity.ok(service.createChaine(request));
     }
 
-    @GetMapping(path = "/find/by/{id}")
+    @GetMapping(path = "/find/by/{id}", produces = "application/json")
     public ResponseEntity<ChaineValue> findChaineById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }

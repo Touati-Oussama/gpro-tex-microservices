@@ -34,4 +34,5 @@ public class ProduitValue {
     BigDecimal prixUnitaire;
     BigDecimal prixMajore;
     String etat;
+    PartieInteresseValue partieInteresse;
 }

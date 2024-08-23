@@ -39,18 +39,17 @@ public class KeycloakSecurityConfig {
                                         "/swagger-ui/**",
                                         "/webjars/**",
                                         "/swagger-ui.html",
-                                        "/actuator/**"
-                                )
+                                        "/actuator/**")
                                 .permitAll()
                 )
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/produit/pd/**").hasAnyRole("Admin", "Responsable_commercial")
-                        .requestMatchers("/api/produit/pe/**").hasAnyRole("Admin", "Responsable_production")
-                        .requestMatchers("/api/produit/couleur/**").hasAnyRole("Admin", "Responsable_ordonnancement")
-                        .requestMatchers("/api/produit/Taille/**").hasAnyRole("Admin", "Responsable_ordonnancement")
-                        .requestMatchers("/api/produit/sfpd/**").hasAnyRole("Admin", "Responsable_ordonnancement")
+                        .requestMatchers("/api/produit/pd/**").hasAnyAuthority("Admin", "Responsable_commercial")
+                        .requestMatchers("/api/produit/pe/**").hasAnyAuthority("Admin", "Responsable_production")
+                        .requestMatchers("/api/produit/couleur/**").hasAnyAuthority("Admin", "Responsable_ordonnancement")
+                        .requestMatchers("/api/produit/Taille/**").hasAnyAuthority("Admin", "Responsable_ordonnancement")
+                        .requestMatchers("/api/produit/sfpd/**").hasAnyAuthority("Admin", "Responsable_ordonnancement")
                         .anyRequest()  // All unmatched URLs
-                        .hasRole("Admin") // Require "Admin" role for access
+                        .hasAuthority("Admin") // Require "Admin" role for access
 
                 );
         http.oauth2ResourceServer(server -> server.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter)));

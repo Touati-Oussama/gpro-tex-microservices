@@ -21,7 +21,7 @@ public class CouleurController {
         return ResponseEntity.ok(service.createCouleur(request));
     }
 
-    @GetMapping(path = "/find/by/{id}")
+    @GetMapping(path = "/find/by/{id}", produces = "application/json")
     public ResponseEntity<CouleurValue> findCouleurById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
@@ -48,7 +48,7 @@ public class CouleurController {
         return ResponseEntity.ok(results);
     }
 
-    @PostMapping("/getAllInList")
+    @PostMapping(value = "/getAllInList", produces = "application/json")
     public ResponseEntity<List<CouleurValue>> getAllInList(@RequestBody List<Long> ids) {
         List<CouleurValue> results = service.getAllInList(ids);
         return ResponseEntity.ok(results);
