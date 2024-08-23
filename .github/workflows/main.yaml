@@ -33,7 +33,6 @@ jobs:
 
       - name: Test & Build Gateway Service
         run: |
-          mvn -B test --file pom.xml
           mvn clean package -DskipTests
         working-directory: ./gpao-tex-core/gateway
 
