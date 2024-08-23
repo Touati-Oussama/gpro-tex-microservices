@@ -18,31 +18,45 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
-   
-      - name: Build Config Service
-        run: mvn clean package -DskipTests
+
+      - name: Test & Build Config Service
+        run: |
+          mvn -B test --file pom.xml 
+          mvn clean package -DskipTests
         working-directory: ./gpao-tex-core/config-server
 
-      - name: Build Discovery Service
-        run: mvn clean package -DskipTests
+      - name: Test & Build Discovery Service
+        run: |
+          mvn -B test --file pom.xml
+          mvn clean package -DskipTests
         working-directory: ./gpao-tex-core/discovery
 
-      - name: Build Gateway Service
-        run: mvn clean package -DskipTests
+      - name: Test & Build Gateway Service
+        run: |
+          mvn -B test --file pom.xml
+          mvn clean package -DskipTests
         working-directory: ./gpao-tex-core/gateway
 
-      - name: Build Ordre Service
-        run: mvn clean package -DskipTests
+      - name: Test & Build Ordre Service
+        run: |
+          mvn -B test --file pom.xml
+          mvn clean package -DskipTests
         working-directory: ./gpao-tex-core/ordre
 
-      - name: Build Partie Prenant Service
-        run: mvn clean package -DskipTests
+      - name: Test & Build Partie Prenant Service
+        run: |
+          mvn -B test --file pom.xml
+          mvn clean package -DskipTests
         working-directory: ./gpao-tex-core/partie-prenante
 
-      - name: Build Produit Service
-        run: mvn clean package -DskipTests
+      - name: Test & Build Produit Service
+        run: |
+          mvn -B test --file pom.xml 
+          mvn clean package -DskipTests
         working-directory: ./gpao-tex-core/produit
 
-      - name: Build Production Service
-        run: mvn clean package -DskipTests
+      - name: Test & Build Production Service
+        run: |
+          mvn -B test --file pom.xml
+          mvn clean package -DskipTests
         working-directory: ./gpao-tex-core/production
