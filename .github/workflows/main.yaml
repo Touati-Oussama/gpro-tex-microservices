@@ -160,7 +160,7 @@ jobs:
         if: contains(steps.changes.outputs.services, 'partie-prenante')
         run: |
           cd gpao-tex-core/partie-prenante
-          ./mvnw clean test
-          ./mvnw package -DskipTests
+          mvn -B test --file pom.xml
+          mvn clean package -DskipTests --file pom.xml
           docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-partie-prenante-service:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-partie-prenante-service:latest
