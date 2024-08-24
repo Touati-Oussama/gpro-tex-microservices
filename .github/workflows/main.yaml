@@ -97,7 +97,11 @@ jobs:
         run: |
           echo "Latest commit message: ${{ github.event.head_commit.message }}"
           echo "Changed files:"
-          git diff --name-only HEAD^ HEAD
+          if [ $(git rev-list --count HEAD) -gt 1 ]; then
+            git diff --name-only HEAD^ HEAD
+          else
+            echo "No previous commit to diff against."
+          fi
 
       # Build and deploy for each service only if changes are detected
       - name: Config Server - Test, Build JAR, Build Docker Image, Push
