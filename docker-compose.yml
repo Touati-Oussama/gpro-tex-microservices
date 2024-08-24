@@ -214,7 +214,7 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
-      - ./grafana:/etc/grafana/provisioning/datasources
+      - grafana-data:/var/lib/grafana  # Add this line
     network_mode: "service:localhsot"
 
   # Watchtower Service
@@ -235,4 +235,4 @@ networks:
 volumes:
   postgres:
   keycloak-data:
-
+  grafana-data:
