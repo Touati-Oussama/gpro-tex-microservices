@@ -92,20 +92,22 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN}}
 
-      # Debugging step to print the latest commit message and changed files
-      - name: Debugging Information
+      - name: Determine changed services
+        id: changes
         run: |
-          echo "Latest commit message: ${{ github.event.head_commit.message }}"
-          echo "Changed files:"
+          echo "Changed services:"
           if [ $(git rev-list --count HEAD) -gt 1 ]; then
-            git diff --name-only HEAD^ HEAD
+            services=$(git diff --name-only HEAD^ HEAD | grep -Eo '^gpao-tex-core/[^/]+/' | sort | uniq)
+            echo "$services"
           else
-            echo "No previous commit to diff against."
+            echo "First commit or no previous commit to diff against."
+            services=$(ls gpao-tex-core)
+            echo "$services"
           fi
+          echo "::set-output name=services::$services"
 
-      # Build and deploy for each service only if changes are detected
-      - name: Config Server - Test, Build JAR, Build Docker Image, Push
-        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'config-server') }}
+      - name: Build and Push Config Server
+        if: contains(steps.changes.outputs.services, 'gpao-tex-core/config-server/')
         run: |
           cd gpao-tex-core/config-server
           ./mvnw clean test
@@ -113,8 +115,8 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-config-service:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-config-service:latest
 
-      - name: Discovery Service - Test, Build JAR, Build Docker Image, Push
-        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'discovery') }}
+      - name: Build and Push Discovery Service
+        if: contains(steps.changes.outputs.services, 'gpao-tex-core/discovery/')
         run: |
           cd gpao-tex-core/discovery
           ./mvnw clean test
@@ -122,8 +124,8 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-discovery-service:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-discovery-service:latest
 
-      - name: Gateway - Test, Build JAR, Build Docker Image, Push
-        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'gateway') }}
+      - name: Build and Push Gateway
+        if: contains(steps.changes.outputs.services, 'gpao-tex-core/gateway/')
         run: |
           cd gpao-tex-core/gateway
           ./mvnw clean test
@@ -131,8 +133,8 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-gateway-service:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-gateway-service:latest
 
-      - name: Ordre Service - Test, Build JAR, Build Docker Image, Push
-        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'ordre') }}
+      - name: Build and Push Ordre Service
+        if: contains(steps.changes.outputs.services, 'gpao-tex-core/ordre/')
         run: |
           cd gpao-tex-core/ordre
           ./mvnw clean test
@@ -140,8 +142,8 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-ordre-service:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-ordre-service:latest
 
-      - name: Produit Service - Test, Build JAR, Build Docker Image, Push
-        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'produit') }}
+      - name: Build and Push Produit Service
+        if: contains(steps.changes.outputs.services, 'gpao-tex-core/produit/')
         run: |
           cd gpao-tex-core/produit
           ./mvnw clean test
@@ -149,8 +151,8 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest
 
-      - name: Production Service - Test, Build JAR, Build Docker Image, Push
-        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'production') }}
+      - name: Build and Push Production Service
+        if: contains(steps.changes.outputs.services, 'gpao-tex-core/production/')
         run: |
           cd gpao-tex-core/production
           ./mvnw clean test
@@ -158,8 +160,8 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-production-service:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-production-service:latest
 
-      - name: Partie Prenante Service - Test, Build JAR, Build Docker Image, Push
-        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'partie-prenante') }}
+      - name: Build and Push Partie Prenante Service
+        if: contains(steps.changes.outputs.services, 'gpao-tex-core/partie-prenante/')
         run: |
           cd gpao-tex-core/partie-prenante
           ./mvnw clean test
