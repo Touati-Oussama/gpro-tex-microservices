@@ -63,13 +63,7 @@ on:
     branches:
       - main
     paths:
-      - 'gpao-tex-core/config-server/**'
-      - 'gpao-tex-core/discovery/**'
-      - 'gpao-tex-core/gateway/**'
-      - 'gpao-tex-core/ordre/**'
-      - 'gpao-tex-core/produit/**'
-      - 'gpao-tex-core/production/**'
-      - 'gpao-tex-core/partie-prenante/**'
+      - 'gpao-tex-core/**'
       - '.github/workflows/**'
 
 jobs:
@@ -90,7 +84,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN}}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Determine changed services
         id: changes
@@ -98,16 +92,16 @@ jobs:
           echo "Changed services:"
           if [ $(git rev-list --count HEAD) -gt 1 ]; then
             services=$(git diff --name-only HEAD^ HEAD | grep -Eo '^gpao-tex-core/[^/]+/' | sort | uniq)
-            echo "$services"
           else
             echo "First commit or no previous commit to diff against."
-            services=$(ls gpao-tex-core)
-            echo "$services"
+            services="gpao-tex-core/*/"
           fi
+          echo "$services"
           echo "::set-output name=services::$services"
 
+      # Dynamic build and deploy steps based on detected changes
       - name: Build and Push Config Server
-        if: contains(steps.changes.outputs.services, 'gpao-tex-core/config-server/')
+        if: contains(steps.changes.outputs.services, 'config-server')
         run: |
           cd gpao-tex-core/config-server
           ./mvnw clean test
@@ -116,7 +110,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-config-service:latest
 
       - name: Build and Push Discovery Service
-        if: contains(steps.changes.outputs.services, 'gpao-tex-core/discovery/')
+        if: contains(steps.changes.outputs.services, 'discovery')
         run: |
           cd gpao-tex-core/discovery
           ./mvnw clean test
@@ -125,7 +119,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-discovery-service:latest
 
       - name: Build and Push Gateway
-        if: contains(steps.changes.outputs.services, 'gpao-tex-core/gateway/')
+        if: contains(steps.changes.outputs.services, 'gateway')
         run: |
           cd gpao-tex-core/gateway
           ./mvnw clean test
@@ -134,7 +128,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-gateway-service:latest
 
       - name: Build and Push Ordre Service
-        if: contains(steps.changes.outputs.services, 'gpao-tex-core/ordre/')
+        if: contains(steps.changes.outputs.services, 'ordre')
         run: |
           cd gpao-tex-core/ordre
           ./mvnw clean test
@@ -143,7 +137,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-ordre-service:latest
 
       - name: Build and Push Produit Service
-        if: contains(steps.changes.outputs.services, 'gpao-tex-core/produit/')
+        if: contains(steps.changes.outputs.services, 'produit')
         run: |
           cd gpao-tex-core/produit
           ./mvnw clean test
@@ -152,7 +146,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest
 
       - name: Build and Push Production Service
-        if: contains(steps.changes.outputs.services, 'gpao-tex-core/production/')
+        if: contains(steps.changes.outputs.services, 'production')
         run: |
           cd gpao-tex-core/production
           ./mvnw clean test
@@ -161,7 +155,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-production-service:latest
 
       - name: Build and Push Partie Prenante Service
-        if: contains(steps.changes.outputs.services, 'gpao-tex-core/partie-prenante/')
+        if: contains(steps.changes.outputs.services, 'partie-prenante')
         run: |
           cd gpao-tex-core/partie-prenante
           ./mvnw clean test
