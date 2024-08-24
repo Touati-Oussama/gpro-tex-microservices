@@ -62,6 +62,15 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'config-server/**'
+      - 'discovery/**'
+      - 'gateway/**'
+      - 'ordre/**'
+      - 'produit/**'
+      - 'production/**'
+      - 'partie-prenante/**'
+      - '.github/workflows/**'
 
 jobs:
   build-deploy:
@@ -79,48 +88,75 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
-      - name: Determine changed directories
-        id: changes
-        run: |
-          echo "##[group]Detecting changes"
-          CHANGED_SERVICES=""
-          for service in $SERVICES; do
-            if git diff --name-only HEAD^ HEAD | grep -q "^gpao-tex-core/$service/"; then
-              echo "$service has changed"
-              CHANGED_SERVICES="$CHANGED_SERVICES $service"
-            fi
-          done
-          echo "CHANGED_SERVICES=$CHANGED_SERVICES" >> $GITHUB_ENV
-          echo "##[endgroup]"
-
-      - name: Test & Build Changed Services
-        run: |
-          if [ -z "$CHANGED_SERVICES" ]; then
-            echo "No changes detected, skipping build."
-            exit 0
-          fi
-          for service in $CHANGED_SERVICES; do
-            echo "Building $service"
-            mvn -B test --file ./gpao-tex-core/$service/pom.xml
-            mvn clean package -DskipTests --file ./gpao-tex-core/$service/pom.xml
-          done
-
       - name: Log in to Docker Hub
-        if: env.CHANGED_SERVICES != ''
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN}}
 
-      - name: Build Docker images
-        if: env.CHANGED_SERVICES != ''
+      # Build and deploy for each service only if changes are detected
+      - name: Config Server - Test, Build JAR, Build Docker Image, Push
+        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'config-server') }}
         run: |
-          for service in $CHANGED_SERVICES; do
-            docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-$service-service:latest ./gpao-tex-core/$service
-          done
+          cd config-server
+          ./mvnw clean test
+          ./mvnw package -DskipTests
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-config-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/gpro-config-service:latest
 
-      - name: Push Docker images
-        if: env.CHANGED_SERVICES != ''
+
+      - name: Discovery Service - Test, Build JAR, Build Docker Image, Push
+        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'discovery') }}
         run: |
-          for service in $CHANGED_SERVICES; do
+          cd discovery
+          ./mvnw clean test
+          ./mvnw package -DskipTests
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-discovery-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/gpro-discovery-service:latest
+
+
+      - name: Gateway - Test, Build JAR, Build Docker Image, Push
+        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'gateway') }}
+        run: |
+          cd gateway
+          ./mvnw clean test
+          ./mvnw package -DskipTests
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-gateway-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/gpro-gateway-service:latest
+
+      - name: Ordre Service - Test, Build JAR, Build Docker Image, Push
+        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'ordre') }}
+        run: |
+          cd ordre
+          ./mvnw clean test
+          ./mvnw package -DskipTests
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-ordre-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/gpro-ordre-service:latest
+
+      - name: Produit Service - Test, Build JAR, Build Docker Image, Push
+        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'produit') }}
+        run: |
+          cd produit
+          ./mvnw clean test
+          ./mvnw package -DskipTests
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest
+
+      - name: Production Service - Test, Build JAR, Build Docker Image, Push
+        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'production') }}
+        run: |
+          cd production
+          ./mvnw clean test
+          ./mvnw package -DskipTests
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-production-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/gpro-production-service:latest
+
+      - name: Partie Prenante Service - Test, Build JAR, Build Docker Image, Push
+        if: ${{ github.event_name == 'push' && github.event.head_commit.message != null && contains(github.event.head_commit.message, 'partie-prenante') }}
+        run: |
+          cd partie-prenante
+          ./mvnw clean test
+          ./mvnw package -DskipTests
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-partie-prenante-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/gpro-partie-prenante-service:latest
      
