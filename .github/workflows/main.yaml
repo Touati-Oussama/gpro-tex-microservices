@@ -63,13 +63,13 @@ on:
     branches:
       - main
     paths:
-      - 'config-server/**'
-      - 'discovery/**'
-      - 'gateway/**'
-      - 'ordre/**'
-      - 'produit/**'
-      - 'production/**'
-      - 'partie-prenante/**'
+      - 'gpao-text-core/config-server/**'
+      - 'gpao-text-core/discovery/**'
+      - 'gpao-text-core/gateway/**'
+      - 'gpao-text-core/ordre/**'
+      - 'gpao-text-core/produit/**'
+      - 'gpao-text-core/production/**'
+      - 'gpao-text-core/partie-prenante/**'
       - '.github/workflows/**'
 
 jobs:
