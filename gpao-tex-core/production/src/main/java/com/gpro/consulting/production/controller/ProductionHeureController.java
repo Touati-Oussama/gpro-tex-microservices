@@ -18,6 +18,10 @@ import java.util.List;
 public class ProductionHeureController {
     private final ProductionHeureService service;
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello, world From Test CI/CD final test !";
+    }
     @PostMapping("/createProdHeure")
     public ResponseEntity<ProductionHeure> createProdHeure(@RequestBody @Valid ProductionHeureValue request) {
         return ResponseEntity.ok(service.createProdHeure(request));
