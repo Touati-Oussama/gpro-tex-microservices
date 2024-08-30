@@ -28,7 +28,7 @@ public class ThemeMapper {
 
         return new ThemeValue(
                 theme.getId(),
-                theme.getProduit().getId(),
+                //theme.getProduit().getId(),
                 theme.getDesignation(),
                 theme.getSpl()
         );

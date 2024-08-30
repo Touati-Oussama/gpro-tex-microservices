@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "pilotageEfficience")
+@Table(name = "eb_pilotage_efficience")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -13,11 +13,11 @@ import lombok.*;
 public class PilotageEfficience extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "site")
+    @JoinColumn(name = "site_id")
     private Site site;
 
     @ManyToOne
-    @JoinColumn(name = "produit")
+    @JoinColumn(name = "eb_produit_id")
     private Produit produit;
 
     @Id

@@ -21,5 +21,6 @@ public class Couleur extends BaseEntity {
     @SequenceGenerator(name = "COULEUR_ID_SEQ", sequenceName = "COULEUR_ID_SEQ", allocationSize = 1)
     private Long id;
     private String designation;
+    @Column(name = "code_couleur")
     private String codeCouleur;
 }

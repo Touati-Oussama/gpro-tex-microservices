@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "eb_famille")
+@Table(name = "eb_familleprod")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor

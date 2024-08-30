@@ -14,7 +14,7 @@ import lombok.*;
 public class Document extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "partieInteresse_id")
+    @JoinColumn(name = "pi_partieint_id")
     private PartieInteresse partieInteresse;
 
     @Id

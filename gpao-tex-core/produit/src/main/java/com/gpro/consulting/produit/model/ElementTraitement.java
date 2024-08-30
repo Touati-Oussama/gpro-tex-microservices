@@ -16,7 +16,7 @@ import java.util.List;
 public class ElementTraitement extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "produit_id")
+    @JoinColumn(name = "eb_produit_id")
     private Produit produit;
 
     @Id
@@ -25,6 +25,7 @@ public class ElementTraitement extends BaseEntity {
     private Long id;
     private String dimension;
     private String observation;
+    @Column(name = "id_machine")
     private Long machineId;
     private String code;
     private String nature;

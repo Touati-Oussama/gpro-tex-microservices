@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "eb_sous_famille_produit")
+@Table(name = "eb_sousfamilleprod")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -13,7 +13,7 @@ import lombok.*;
 public class SousFamilleProduit extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "familleProduit_id")
+    @JoinColumn(name = "eb_familleprod_id")
     private FamilleProduit familleProduit;
 
     @Id

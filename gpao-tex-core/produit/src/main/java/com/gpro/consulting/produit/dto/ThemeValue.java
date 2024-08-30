@@ -12,4 +12,14 @@ public class ThemeValue {
     Long produitId;
     String designation;
     String spl;
+
+
+    public ThemeValue(Long id, String designation, String spl) {
+        this.id = id;
+        this.designation = designation;
+        this.spl = spl;
+    }
+
+
+
 }

@@ -13,4 +13,13 @@ public class TailleValue {
     String designation;
     Integer ordre;
     String code;
+
+    public TailleValue(Long id, String designation, Integer ordre, String code) {
+        this.id = id;
+        this.designation = designation;
+        this.ordre = ordre;
+        this.code = code;
+    }
+
+
 }

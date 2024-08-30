@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.Calendar;
 
 @Entity
-@Table(name = "gp_production_jour")
+@Table(name = "gp_productionjour")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder
@@ -21,10 +21,15 @@ public class ProductionJour extends BaseEntity {
     private Calendar date;
     private Long quantite;
     private String observation;
+    @Column(name = "elementplanning_id")
     private Long elementPlanningId;
+    @Column(name = "of")
     private Long ofId;
+    @Column(name = "chaine")
     private Long chaineId;
+    @Column(name = "pi_pi_id")
     private Long partieInterreseId;
+    @Column(name = "produit_id")
     private Long produitId;
     private String periode;
 }

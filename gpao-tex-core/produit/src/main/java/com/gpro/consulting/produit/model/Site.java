@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "site")
+@Table(name = "pi_com_site")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor

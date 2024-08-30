@@ -19,6 +19,7 @@ public class LigneProduit extends BaseEntity {
     @SequenceGenerator(name = "LIGNE_PRODUIT_SEQ", sequenceName = "LIGNE_PRODUIT_SEQ", allocationSize = 1)
     private Long id;
     private String designation;
+    @Column(name = "id_fournisseur")
     private Long fournisseur;
     private Calendar finDe;
     private Calendar finA;

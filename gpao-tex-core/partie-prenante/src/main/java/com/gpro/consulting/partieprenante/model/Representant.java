@@ -14,9 +14,8 @@ import lombok.*;
 public class Representant extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "partieInteresse_id")
+    @JoinColumn(name = "pi_partieint_id")
     private PartieInteresse partieInteresse;
-
     @Id
     @GeneratedValue(generator = "REPRESENTENT_PARTIE_INTERESSE_ID_GENERATOR", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "REPRESENTENT_PARTIE_INTERESSE_ID_SEQ", sequenceName = "REPRESENTENT_PARTIE_INTERESSE_ID_SEQ", allocationSize = 1)
@@ -24,6 +23,7 @@ public class Representant extends BaseEntity {
     private String nom;
     private String fonction;
     private String email;
+    @Column(name = "tel")
     private String telephone;
     private String fax;
 

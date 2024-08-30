@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "go_shippement")
+@Table(name = "eb_go_shippement")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -17,7 +17,7 @@ public class ProduitGoShippement extends BaseEntity {
     private Site site;
 
     @ManyToOne
-    @JoinColumn(name = "produit_id")
+    @JoinColumn(name = "eb_produit_id")
     private Produit produit;
 
     @Id

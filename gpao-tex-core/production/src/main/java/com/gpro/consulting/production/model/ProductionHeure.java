@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Entity
-@Table(name = "gp_production_heure")
+@Table(name = "gp_productionheure")
 @Data
 @Builder
 @AllArgsConstructor
@@ -25,10 +25,15 @@ public class ProductionHeure extends BaseEntity {
     private Calendar date;
     private Long quantite;
     private String observation;
+    @Column(name = "elementplaning_id")
     private Long elementPlanningId;
+    @Column(name = "of")
     private Long ofId;
+    @Column(name = "chaine")
     private Long chaineId;
+    @Column(name = "pi_pi_id")
     private Long partieInterreseId;
+    @Column(name = "produit_id")
     private Long produitId;
     private String periode;
 }

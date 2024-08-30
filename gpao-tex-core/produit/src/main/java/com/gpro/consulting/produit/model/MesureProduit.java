@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "mesureProduit")
+@Table(name = "eb_mesure_produit")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -13,11 +13,11 @@ import lombok.*;
 public class MesureProduit extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "produit_id")
+    @JoinColumn(name = "eb_produit_id")
     private Produit produit;
 
     @ManyToOne
-    @JoinColumn(name = "taille_id")
+    @JoinColumn(name = "id_taille")
     private Taille taille;
 
     @Id

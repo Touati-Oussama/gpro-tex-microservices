@@ -22,11 +22,11 @@ public class Produit extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sfpd_id")
+    @JoinColumn(name = "eb_sfprod_id")
     private SousFamilleProduit sousFamilleProduit;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "site_id")
+    @JoinColumn(name = "com_site_id")
     private Site site;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -58,16 +58,23 @@ public class Produit extends BaseEntity {
     @Transient
     private PartieInteresseValue partieInteresse;
 
+    @Column(name = "pi_pi_id")
     private Long partieInteresseId;
     private String reference;
     private String designation;
+    @Column(name = "fiche_besoin")
     private boolean ficheBesoin = false;
+    @Column(name = "sans_taille")
     private boolean sansTaille = false;
+    @Column(name = "sans_couleur")
     private boolean sansCouleur = false;
+    @Column(name = "code_conception")
     private String codeConception;
     private Integer quantite;
     private Integer cadence;
+    @Column(name = "prix_unitaire")
     private BigDecimal prixUnitaire;
+    @Column(name = "prix_majore")
     private BigDecimal prixMajore;
     private String etat;
 }

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "gp_capacite_semaine")
+@Table(name = "gp_capacitesemaine")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder
@@ -19,11 +19,16 @@ public class CapaciteSemaine extends BaseEntity {
     private Long semaine;
     private Long semainesDe;
     private Long semainesA;
+    @Column(name="capacite_totale")
     private Double capaciteTotale;
+    @Column(name="capacite_previsionnelle")
     private Double capacitePrevisionnelle;
+    @Column(name="nombre_heure")
     private Double nombreHeure;
+    @Column(name="taux_absence")
     private Double tauxAbsence;
     private Long fin1;
+    @Column(name="atelier_id")
     private Long atelierId;
     private Long annee;
 }

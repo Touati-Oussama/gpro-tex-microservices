@@ -29,7 +29,7 @@ public class TailleMapper {
 
         return new TailleValue(
                 taille.getId(),
-                taille.getProduit().getId(),
+                //taille.getProduit().getId(),
                 taille.getDesignation(),
                 taille.getOrdre(),
                 taille.getCode()

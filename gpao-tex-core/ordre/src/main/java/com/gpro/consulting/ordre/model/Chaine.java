@@ -13,9 +13,8 @@ import java.util.Calendar;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Chaine extends BaseEntity {
-
     @ManyToOne
-    @JoinColumn(name = "ficheEclatement_id")
+    @JoinColumn(name = "fiche_eclatement_id")
     private FicheEclatement ficheEclatement;
 
     @ManyToOne
@@ -27,14 +26,19 @@ public class Chaine extends BaseEntity {
     @SequenceGenerator(name = "GP_CHAINE_SEQ", sequenceName = "GP_CHAINE_SEQ", allocationSize = 1)
     private Long id;
     private String designation;
+    @Column(name = "id_site")
     private Long siteId;
+    @Column(name="date_libre")
     private Calendar dateLibre;
     private boolean planning;
+    @Column(name="designation_client")
     private String designationClient;
     private Boolean production;
     private Boolean developpement;
+    @Column(name="poste_qualite1")
     private String posteQualite1;
     private String defaut1;
+    @Column(name="nb_defaut1")
     private Long nbDefaut1;
 }
 

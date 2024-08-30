@@ -13,7 +13,7 @@ import lombok.*;
 public class Paquet extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "of_id")
+    @JoinColumn(name = "gp_of_id")
     private OrdreFabrication ordreFabrication;
 
     @ManyToOne
@@ -27,7 +27,9 @@ public class Paquet extends BaseEntity {
     private Long num;
     private Boolean productionHeure;
     private Long siteId;
+    @Column(name = "eb_couleur_id")
     private Long couleurId;
+    @Column(name = "eb_taille_id")
     private Long tailleId;
     private Long quantite;
     private String numMatelas;
