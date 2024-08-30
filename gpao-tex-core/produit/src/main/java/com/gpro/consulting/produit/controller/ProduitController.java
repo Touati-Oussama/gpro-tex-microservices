@@ -19,6 +19,10 @@ public class ProduitController {
 
     private final ProduitService service;
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello, world From Test CI/CD final test !";
+    }
     @PostMapping("/createProduit")
     public ResponseEntity<String> createProduit(@RequestBody @Valid ProduitValue request) {
         return ResponseEntity.ok(service.createProduit(request));
