@@ -12,7 +12,7 @@ services:
       retries: 4
     networks:
       - microservice-net
-  
+
 
   gpro-config-service:
     image: touatioussama/gpro-config-service
@@ -57,11 +57,8 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
       - CONFIG_SERVICE_URL=http://gpro-config-service:10000
-      #- SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/ordre
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      #- KEYCLOAK_ISSUER_URI=http://keycloak-auth:8080/realms/gpao-realm}
-      #- KEYCLOAK_SET_URI=http://keycloak-auth:8080/realms/gpao-realm/protocol/openid-connect/certs
     depends_on:
       gpro-config-service:
         condition: service_healthy
@@ -79,11 +76,8 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
       - CONFIG_SERVICE_URL=http://gpro-config-service:10000
-      #- SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/partie-prenante
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      #- KEYCLOAK_ISSUER_URI=http://keycloak-auth:8080/realms/gpao-realm}
-      #- KEYCLOAK_SET_URI=http://keycloak-auth:8080/realms/gpao-realm/protocol/openid-connect/certs
     depends_on:
       gpro-config-service:
         condition: service_healthy
@@ -101,11 +95,8 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
       - CONFIG_SERVICE_URL=http://gpro-config-service:10000
-      #- SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/production
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      #- KEYCLOAK_ISSUER_URI=http://keycloak-auth:8080/realms/gpao-realm}
-      #- KEYCLOAK_SET_URI=http://keycloak-auth:8080/realms/gpao-realm/protocol/openid-connect/certs
     depends_on:
       gpro-config-service:
         condition: service_healthy
@@ -123,11 +114,8 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
       - CONFIG_SERVICE_URL=http://gpro-config-service:10000
-      #- SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/produit
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      #- KEYCLOAK_ISSUER_URI=http://keycloak-auth:8080/realms/gpao-realm}
-      #- KEYCLOAK_SET_URI=http://keycloak-auth:8080/realms/gpao-realm/protocol/openid-connect/certs
     depends_on:
       gpro-config-service:
         condition: service_healthy
@@ -145,8 +133,6 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://gpro-dicovery-service:8668/eureka
       - CONFIG_SERVICE_URL=http://gpro-config-service:10000
-      #- KEYCLOAK_ISSUER_URI=http://keycloak-auth:8080/realms/gpao-realm}
-      #- KEYCLOAK_SET_URI=http://keycloak-auth:8080/realms/gpao-realm/protocol/openid-connect/certs
     depends_on:
       gpro-config-service:
         condition: service_healthy

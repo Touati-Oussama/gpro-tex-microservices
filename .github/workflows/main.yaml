@@ -2,7 +2,6 @@
 
 
 name: Build & Deploy Microservices App
-
 on:
   push:
     branches:
