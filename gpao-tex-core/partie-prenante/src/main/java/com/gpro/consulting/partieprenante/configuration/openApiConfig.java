@@ -15,10 +15,10 @@ import io.swagger.v3.oas.annotations.servers.Server;
         info = @Info(
                 contact = @Contact(
                         name = "Oussama",
-                        email = "oussama.soussi.it@gmail.com"
+                        email = "oussama.touati.178@gmail.com"
                 ),
                 description = "OpenApi documentation for pi service",
-                title = "OpenApi specification - Oussama Soussi",
+                title = "OpenApi specification - Oussama Touati",
                 version = "1.0"
         ),
         servers = @Server(

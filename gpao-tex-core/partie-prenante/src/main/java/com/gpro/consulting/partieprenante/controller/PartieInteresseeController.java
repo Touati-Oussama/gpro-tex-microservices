@@ -20,8 +20,9 @@ public class PartieInteresseeController {
 
     @GetMapping("/hello")
     public String hello(){
-        return "Hello, world this is a test of pipeline !";
+        return "Hello, world this is a test of pffffffffpeline !";
     }
+
     @PostMapping("/creerPi")
     public ResponseEntity<String> createPi(@RequestBody @Valid PartieInteresseValue request) {
         return ResponseEntity.ok(service.createPi(request));
