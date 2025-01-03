@@ -90,12 +90,23 @@ jobs:
           cd gpao-tex-core/produit
           mvn -B test --file pom.xml
           mvn clean package -DskipTests --file pom.xml
-          mvn sonar:sonar \
-            -Dsonar.projectKey=produit \
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
           docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest
+
+      # Step for SonarQube analysis (using SonarSource's GitHub Action)
+      - name: Run SonarQube analysis
+        if: contains(steps.changes.outputs.services, 'produit')
+        uses: sonarsource/sonarqube-scan-action@v1
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.organization=my-org
+            -Dsonar.projectKey=produit
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+
 
       - name: Test & Build Jar & Buil Image &  Push Image To Docker Hub Of Production Service
         if: contains(steps.changes.outputs.services, 'production')
