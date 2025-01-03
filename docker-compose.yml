@@ -214,11 +214,40 @@ services:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_POLL_INTERVAL= 10
 
+  # SonarQube
+  sonarqube:
+    image: sonarqube:lts
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://db:5432/sonarqube
+      SONAR_JDBC_USERNAME: sonarqube
+      SONAR_JDBC_PASSWORD: sonarqube
+    depends_on:
+      - db
+    networks:
+      - sonar-net
+
+  db:
+    image: postgres:15
+    container_name: sonarqube-db
+    environment:
+      POSTGRES_USER: sonarqube
+      POSTGRES_PASSWORD: sonarqube
+      POSTGRES_DB: sonarqube
+    networks:
+      - sonar-net
+    volumes:
+      - sonarqube-data:/var/lib/postgresql/data
+
 networks:
   microservice-net:
-    driver: bridge
+      driver: bridge
+  sonar-net:
 
 volumes:
   postgres:
   keycloak-data:
   grafana-data:
+  sonarqube-data:
