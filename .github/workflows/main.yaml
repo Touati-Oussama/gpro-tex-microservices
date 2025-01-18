@@ -95,14 +95,16 @@ jobs:
 
       - name: Test & Build Jar & Buil Image &  Push Image To Docker Hub Of Produit Service
         if: contains(steps.changes.outputs.services, 'produit')
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
                 cd gpao-tex-core/produit
                 mvn -B test --file pom.xml
                 mvn clean package -DskipTests --file pom.xml
+                mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevSecOps -Dsonar.projectName='DevSecOps'          
                 docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest .
                 docker push ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest
-
-
 
       - name: Test & Build Jar & Buil Image &  Push Image To Docker Hub Of Production Service
         if: contains(steps.changes.outputs.services, 'production')
