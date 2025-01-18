@@ -57,16 +57,74 @@ jobs:
           echo "::set-output name=services::$services"
 
       # Dynamic build and deploy steps based on detected changes
-      - name: Unit Tests, Build Jar, and Push Docker Images
+      - name: Test & Build Jar & Buil Image &  Push Image To Docker Hub Of Config Server
+        if: contains(steps.changes.outputs.services, 'config-server')
         run: |
-          for service in ${{ steps.changes.outputs.services }}; do
-            echo "Processing $service"
-            cd gpao-tex-core/$service
-            mvn -B test --file pom.xml
-            mvn clean package -DskipTests --file pom.xml
-            docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-${service}-service:latest .
-            docker push ${{ secrets.DOCKER_USERNAME }}/gpro-${service}-service:latest
-          done
+            cd gpao-tex-core/config-server
+              mvn -B test --file pom.xml
+              mvn clean package -DskipTests --file pom.xml
+              docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-config-service:latest .
+              docker push ${{ secrets.DOCKER_USERNAME }}/gpro-config-service:latest
+
+      - name: Test & Build Jar & Buil Image &  Push Image To Docker Hub Of Discovery Service
+        if: contains(steps.changes.outputs.services, 'discovery')
+        run: |
+                cd gpao-tex-core/discovery
+                mvn -B test --file pom.xml
+                mvn clean package -DskipTests --file pom.xml
+                docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-discovery-service:latest .
+                docker push ${{ secrets.DOCKER_USERNAME }}/gpro-discovery-service:latest
+
+      - name: Test & Build Jar & Buil Image &  Push Image To Docker Hub Of Gateway
+        if: contains(steps.changes.outputs.services, 'gateway')
+        run: |
+                cd gpao-tex-core/gateway
+                mvn -B test --file pom.xml
+                mvn clean package -DskipTests --file pom.xml
+                docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-gateway-service:latest .
+                docker push ${{ secrets.DOCKER_USERNAME }}/gpro-gateway-service:latest
+
+      - name: Test & Build Jar & Buil Image &  Push Image To Docker Hub Of Ordre Service
+        if: contains(steps.changes.outputs.services, 'ordre')
+        run: |
+                cd gpao-tex-core/ordre
+                mvn -B test --file pom.xml
+                mvn clean package -DskipTests --file pom.xml
+                docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-ordre-service:latest .
+                docker push ${{ secrets.DOCKER_USERNAME }}/gpro-ordre-service:latest
+
+      - name: Test & Build Jar & Buil Image &  Push Image To Docker Hub Of Produit Service
+        if: contains(steps.changes.outputs.services, 'produit')
+        run: |
+                cd gpao-tex-core/produit
+                mvn -B test --file pom.xml
+                mvn clean package -DskipTests --file pom.xml
+                docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest .
+                docker push ${{ secrets.DOCKER_USERNAME }}/gpro-produit-service:latest
+
+
+
+      - name: Test & Build Jar & Buil Image &  Push Image To Docker Hub Of Production Service
+        if: contains(steps.changes.outputs.services, 'production')
+        run: |
+                cd gpao-tex-core/production
+                mvn -B test --file pom.xml
+                mvn clean package -DskipTests --file pom.xml
+                docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-production-service:latest .
+                docker push ${{ secrets.DOCKER_USERNAME }}/gpro-production-service:latest
+
+      - name: Test & Build Jar & Buil Image &  Push Image To Docker Hub Of Partie Prenante Service
+        if: contains(steps.changes.outputs.services, 'partie-prenante')
+        run: |
+                cd gpao-tex-core/partie-prenante
+                mvn -B test --file pom.xml
+                mvn clean package -DskipTests --file pom.xml
+                docker build -t ${{ secrets.DOCKER_USERNAME }}/gpro-partie-prenante-service:latest .
+                docker push ${{ secrets.DOCKER_USERNAME }}/gpro-partie-prenante-service:latest
+      
+      
+      
+
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
