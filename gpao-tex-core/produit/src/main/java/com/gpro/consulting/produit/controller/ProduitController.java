@@ -21,7 +21,7 @@ public class ProduitController {
 
     @GetMapping("/hello")
     public String hello(){
-        return "Hello, world From Test CI/CD  Test For DevSecOps Integratefffffffffddfdfddfffff !";
+        return "Hello, world From Test CI/CD  Test For DevSecOps Integrated !";
     }
     @PostMapping("/createProduit")
     public ResponseEntity<String> createProduit(@RequestBody @Valid ProduitValue request) {
