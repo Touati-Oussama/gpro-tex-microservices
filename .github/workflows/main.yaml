@@ -97,7 +97,7 @@ jobs:
         if: contains(steps.changes.outputs.services, 'produit')
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ dock }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
                 cd gpao-tex-core/produit
                 mvn -B test --file pom.xml
