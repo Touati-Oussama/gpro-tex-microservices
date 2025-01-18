@@ -216,14 +216,11 @@ services:
 
 
 
-
 networks:
   microservice-net:
       driver: bridge
-  sonar-net:
 
 volumes:
   postgres:
   keycloak-data:
   grafana-data:
-  sonarqube-data:
